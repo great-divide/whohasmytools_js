@@ -31,12 +31,15 @@
 		<% end %>
 
 <!-- TOOL SECTION, float side by side -->
-<h2 id="show-toolbox" data-user="<%= @user.id %>"><%= link_to "My Toolbox", user_tools_path(@user)%></h2>
-	<ol>
-		<% @user.tools.each do |t| %>
-				<p><li><b><%= link_to "#{t.name}:", tool_path(t.id)%></b> <%= " #{t.description}" %></li></p>
-		<% end %>
-	</ol>
+<h2>My Toolbox</h2> 
+	<div>
+		<button id="show-toolbox" data-user_id="<%= @user.id %>">Show Toolbox</button>
+		<button style="display: none" id="hide-toolbox" data-user_id="<%= @user.id %>">Hide Toolbox</button>
+	</div>
+	<br>
+	<div id="toolbox">
+		
+	</div>
 
 <h3>Add some tools to your toolbox so you can loan them out!</h3>
 	<%= form_for @tool do |f| %>
@@ -64,9 +67,36 @@
 	<script type="text/javascript" charset="utf-8">
 		$(function(){
 			$("#show-toolbox").on("click", function(event) {
-				event.preventDefault();
-				console.log("you clicked")
-				debugger
+
+				
+				var id = $(this).data("user_id");
+				
+				$.get("/users/" + id + "/tools" + ".json", function(json) {
+					let i = 1
+					json.forEach(function(el) {
+						// debugger
+
+						$("#toolbox").append(`<p>${i}. ` + 
+							el.name + 
+							`  (${el.description})  ` +
+							`<button id="show-tool-${el.id}">Show Tool</button></p>`)
+					i++
+					})
+					$("#show-toolbox").toggle();
+					$("#hide-toolbox").toggle();
+				})
+				
 			})
+		})
+	</script>
+
+	<script type="text/javascript" charset="utf-8">
+		$(function(){
+			$("#hide-toolbox").on("click", function(event) {
+				$("#toolbox").text("")
+			$("#show-toolbox").toggle();
+			$("#hide-toolbox").toggle();
+			})
+
 		})
 	</script>
