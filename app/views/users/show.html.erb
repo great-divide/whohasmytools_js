@@ -31,7 +31,7 @@
 		<% end %>
 
 <!-- TOOL SECTION, float side by side -->
-<h2><%= link_to "My Toolbox", user_tools_path(@user)%></h2>
+<h2 id="show-toolbox" data-user="<%= @user.id %>"><%= link_to "My Toolbox", user_tools_path(@user)%></h2>
 	<ol>
 		<% @user.tools.each do |t| %>
 				<p><li><b><%= link_to "#{t.name}:", tool_path(t.id)%></b> <%= " #{t.description}" %></li></p>
@@ -60,3 +60,13 @@
 		<%= f.select :tool_id, options_for_select(@user.available_tools.collect { | tool | [tool.name, tool.id] }, @tool.id), {include_blank: true}, {} %>
 		<%= f.submit "Loan it out!" %>
 	<% end %>
+
+	<script type="text/javascript" charset="utf-8">
+		$(function(){
+			$("#show-toolbox").on("click", function(event) {
+				event.preventDefault();
+				console.log("you clicked")
+				debugger
+			})
+		})
+	</script>

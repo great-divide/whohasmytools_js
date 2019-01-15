@@ -30,6 +30,8 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'omniauth-facebook'
 
+gem 'jquery-rails'
+
 gem 'figaro'
 
 # Use ActiveStorage variant
