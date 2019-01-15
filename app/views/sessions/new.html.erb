@@ -1,0 +1,50 @@
+<h1>Who Has My Tools?</h1>
+
+<% if @user.errors.any? %>
+  <% @user.errors.each do |att, message| %>
+    <h3 style="color: red"><%= message %></h3>
+  <% end %>
+<% end %>
+
+<div class="content">
+  <h3>Already a member? Sign in!</h3>
+    <%= form_for(:session, url: login_path) do |f| %>
+
+          <%= f.label :username %>
+          <%= f.text_field :username %> <br>
+
+          <%= f.label :password %>
+          <%= f.password_field :password %>
+
+          <%= f.submit "Log in" %>
+        <% end %>
+  <br>
+  <h4>Or sign in with Facebook:</h4>
+  <br>
+    <%= link_to('Log in with Facebook!', '/auth/facebook') %>
+  <br>
+  <br>
+  <br>
+</div>
+
+
+<div class="content">
+  <h2>Should be a member? Sign up!</h2>
+    <%= form_for @user do |f| %>
+
+          <%= f.label :username %>
+          <%= f.text_field :username %> <br>
+          <%= f.label :email %>
+          <%= f.email_field :email %> <br>
+
+          <%= f.label :password %>
+          <%= f.password_field :password %> 
+          <%= f.label :password_confirmation, "Confirm Password" %>
+          <%= f.password_field :password_confirmation %>
+
+          <%= f.submit "Sign Me Up!" %>
+    <% end %>
+</div>
+<div class="content">
+    
+</div>

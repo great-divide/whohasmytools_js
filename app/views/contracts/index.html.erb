@@ -1,0 +1,47 @@
+<h1><%=@user.username%>'s Contracts</h1>
+
+<h2>You have <%= @user.active.length %> active loans:</h2>
+	<% @user.active_loans.each do |c| %>
+		<ol>
+			<li><h4><%=c.borrower.username%> has had your <%=c.tool.name%> since <%= c.created_at.strftime("%A, %B %d") %></h4>
+			
+				<%= form_for c do |f|%>
+					<%= f.label "Extend the loan:" %>
+					
+					<%= f.submit "Keep it a little longer!", :name => 'extend' %> <br>
+					<%= f.label "Click here to close out the loan:" %>
+					<%=f.submit "Tool returned!", :name => 'return' %>
+
+				<% end %>
+
+
+				<!-- <form class="" action="/contracts/<%= c.id %>/edit" method="POST">
+				  <input type="submit" value="Edit Contract" name="edit">
+				</form> -->
+			</li>
+		</ol>
+	<% end %>
+	<br>
+	<ol>
+		<% @user.active_borrows.each do |c| %>
+				<li>You have had <%=c.loaner.username%>'s <%=c.tool.name%> since <%= c.created_at.strftime("%a %b %d %Y")%></li>
+		<% end %>
+	</ol>
+<br>
+<h3>You've loaned and/or borrowed <%= @user.loan_history.length + @user.borrow_history.length %> tools!</h3>
+		<ol>
+			<% @user.loan_history.each do |loan| %>
+					<p><li>
+						<%=loan.borrower.username%> returned your <%=loan.tool.name%> on <%= loan.updated_at.strftime("%a %b %d %Y") %>
+					</p></li>
+			<% end %>
+		</ol>
+		<br>
+		<ol>
+			<% @user.borrow_history.each do |borrow| %>
+					<p><li>
+						You returned <%=loan.loaner.username%>'s <%=loan.tool.name%>	
+					</p></li>
+			<% end %>
+		</ol>
+<p><%= link_to "Back to My Dashboard", user_path(@user)%></p>

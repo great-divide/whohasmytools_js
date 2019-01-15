@@ -1,0 +1,12 @@
+<% if @tool.active == false %>
+	<h3>Loan out your <%= @tool.name %></h3>
+		<%= form_for [@tool, @contract] do |f| %>
+			<%= f.label :borrower, "Borrower" %>
+			<%= f.collection_select :borrower, User.all, :username, :username, {include_blank: true} %>
+			<%= f.submit "Loan it out!" %>
+		<% end %>
+<% else %>
+	<h3>You already loaned it out!</h3>
+		<p><%= User.find_by(id: @contract.borrower_id).username %> has it!</p>
+<% end %>
+<p><%= link_to "Back to My Dashboard", user_path(@user)%></p>

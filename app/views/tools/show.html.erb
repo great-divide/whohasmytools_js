@@ -1,0 +1,26 @@
+<h2><%= @tool.name %></h2>
+<h4>Description</h4>
+<p><%= @tool.description %></p>
+
+<%= link_to "Click here to Loan it out!", new_tool_contract_path(@tool) %>
+
+<br>
+<br>
+<h4>Loan History</h4>
+	<% if !@tool.contracts.empty? %>
+		<% @tool.contracts.each do |c| %>
+			<ol>
+				<li>Loaned to <%= c.borrower.username %> on <%= c.created_at.strftime("%a %b %d %Y") %></li>
+			</ol>
+			<% end %>
+	<% else %>
+		<p>You have not loaned this tool out yet.</p>
+	<% end %>
+<br>
+<br>
+<%= link_to "Click here to Edit or Delete Tool", edit_tool_path(@tool) %>
+<p><%= link_to "Back to My Dashboard", user_path(@user)%></p>
+
+
+
+<!-- add "loan it out" functionality... button that takes user to (tools/7/contracts/new) , and there, select user to loan it out to -->

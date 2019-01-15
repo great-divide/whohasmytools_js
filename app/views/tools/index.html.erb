@@ -1,0 +1,10 @@
+<h2><%= @user.username%>'s Toolbox</h2>
+
+<% @user.tools.each do |t| %>
+	<p><b><%= t.name %>: </b> <%= t.description %></p>
+	<p>
+		<%= link_to "Edit Tool", edit_tool_path(t)%>
+		<%= link_to "Delete Tool", tool_path(t), :method => :delete %>
+	</p>
+<% end %>
+<p><%= link_to "Back to My Dashboard", user_path(@user) %></p>

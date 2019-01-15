@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Whohasmytools</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+ <!--    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %> -->
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <link rel="stylesheet" href="/stylesheets/main.css" />
+  </head>
+
+  <body>
+
+
+    
+    <div class="container"  role="main">
+      <%= yield %>
+    </div>
+  </body>
+</html>
