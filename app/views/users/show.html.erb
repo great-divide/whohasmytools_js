@@ -33,12 +33,14 @@
 <!-- TOOL SECTION, float side by side -->
 <h2>My Toolbox</h2> 
 	<div>
-		<button id="show-toolbox" data-user_id="<%= @user.id %>">Show Toolbox</button>
-		<button style="display: none" id="hide-toolbox" data-user_id="<%= @user.id %>">Hide Toolbox</button>
+		<button id="show-toolbox" data-user-id="<%= @user.id %>">Show Toolbox</button>
+		<button style="display: none" id="hide-toolbox" data-user-id="<%= @user.id %>">Hide Toolbox</button>
 	</div>
 	<br>
 	<div id="toolbox">
-		
+		<div class="tool">
+			
+		</div>
 	</div>
 
 <h3>Add some tools to your toolbox so you can loan them out!</h3>
@@ -66,37 +68,37 @@
 
 	<script type="text/javascript" charset="utf-8">
 		$(function(){
-			$("#show-toolbox").on("click", function(event) {
-
+			$("#show-toolbox").on("click", function() {
 				
-				var id = $(this).data("user_id");
+				var id = $(this).data("user-id");
 				
 				$.get("/users/" + id + "/tools" + ".json", function(json) {
+					
 					let i = 1
-					json.forEach(function(el) {
-						// debugger
 
+					json.forEach(function(el) {
+					
 						$("#toolbox").append(`<p>${i}. ` + 
 							el.name + 
 							`  (${el.description})  ` +
-							`<button id="show-tool-${el.id}">Show Tool</button></p>`)
-					i++
+							`<button class="show-tool" data-user-id="${id}" data-tool-id="${el.id}" onclick="showTool(${id}, ${el.id})">Show Tool</button></p>`);
+					
+						i++;
 					})
+
 					$("#show-toolbox").toggle();
 					$("#hide-toolbox").toggle();
-				})
-				
+				})		
 			})
-		})
-	</script>
 
-	<script type="text/javascript" charset="utf-8">
+		})
+
 		$(function(){
-			$("#hide-toolbox").on("click", function(event) {
+			$("#hide-toolbox").on("click", function() {
 				$("#toolbox").text("")
-			$("#show-toolbox").toggle();
-			$("#hide-toolbox").toggle();
+				$("#show-toolbox").toggle();
+				$("#hide-toolbox").toggle();
 			})
-
 		})
+
 	</script>

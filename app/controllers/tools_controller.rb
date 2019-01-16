@@ -1,6 +1,7 @@
 class ToolsController < ApplicationController
 		# add before: helper method to redirect if !logged_in?
 
+
 	def index
 
 		if params[:user_id]
@@ -9,7 +10,7 @@ class ToolsController < ApplicationController
 			@tools = @user.tools
 		
 			respond_to do |format|
-				format.html { render :show }
+				format.html { render :index }
 				format.json { render json: @tools }
 			end
 		else
@@ -39,9 +40,11 @@ class ToolsController < ApplicationController
 	def show
 		if logged_in?
 			@tool = Tool.find_by(id: params[:id])
-			# respond_to do |format|
-			# 	format.html { render :show }
-			# 	format.json { render :json @tools}
+			# binding.pry
+				respond_to do |format|
+					format.html { render :show }
+					format.json { render json: @tool }
+				end
 		else
 			redirect_to '/'
 		end
