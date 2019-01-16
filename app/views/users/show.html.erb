@@ -33,8 +33,8 @@
 <!-- TOOL SECTION, float side by side -->
 <h2>My Toolbox</h2> 
 	<div>
-		<button id="show-toolbox" data-user-id="<%= @user.id %>">Show Toolbox</button>
-		<button style="display: none" id="hide-toolbox" data-user-id="<%= @user.id %>">Hide Toolbox</button>
+		<button id="show-toolbox" data-user-id="<%= @user.id %>">' Show Toolbox '</button>
+		<button style="display: none" id="hide-toolbox" data-user-id="<%= @user.id %>">' Hide Toolbox '</button>
 	</div>
 	<br>
 	<div id="toolbox">
@@ -69,19 +69,24 @@
 	<script type="text/javascript" charset="utf-8">
 		$(function(){
 			$("#show-toolbox").on("click", function() {
-				
+
 				var id = $(this).data("user-id");
 				
 				$.get("/users/" + id + "/tools" + ".json", function(json) {
 					
 					let i = 1
 
-					json.forEach(function(el) {
+					json.forEach(function(tool) {
 					
-						$("#toolbox").append(`<p>${i}. ` + 
-							el.name + 
-							`  (${el.description})  ` +
-							`<button class="show-tool" data-user-id="${id}" data-tool-id="${el.id}" onclick="showTool(${id}, ${el.id})">Show Tool</button></p>`);
+						$("#toolbox").append(
+							`<div id="tool-${tool.id}">
+							<p>${i}. ` + 
+							tool.name + 
+							`  (${tool.description})  ` +
+							`<button id="show-tool-${tool.id}" data-user-id="${id}" data-tool-id="${tool.id}" onclick="showTool(${id}, ${tool.id})">' Show Tool '</button>
+							<button style="display: none" id="hide-tool-${tool.id}" onclick="hideTool(${tool.id})"> ' Hide Tool '</button></p>
+							<p id="tool-${tool.id}-status"></p>
+							</div>`);
 					
 						i++;
 					})
@@ -90,15 +95,5 @@
 					$("#hide-toolbox").toggle();
 				})		
 			})
-
 		})
-
-		$(function(){
-			$("#hide-toolbox").on("click", function() {
-				$("#toolbox").text("")
-				$("#show-toolbox").toggle();
-				$("#hide-toolbox").toggle();
-			})
-		})
-
 	</script>

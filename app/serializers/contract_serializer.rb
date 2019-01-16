@@ -1,3 +1,4 @@
 class ContractSerializer < ActiveModel::Serializer
-  attributes :id
+  attributes :id, :borrower, :active
+  belongs_to :tool
 end
