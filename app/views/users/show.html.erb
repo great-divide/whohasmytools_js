@@ -38,18 +38,16 @@
 	</div>
 	<br>
 	<div id="toolbox">
-		<div class="tool">
-			
-		</div>
+	
 	</div>
 
 <h3>Add some tools to your toolbox so you can loan them out!</h3>
-	<%= form_for @tool do |f| %>
+	<%= form_for @tool, :html => {:id => "create_tool", :data => {user_id: @user.id, turbolinks: false} } do |f|  %>
 		<%= f.label :name, "Tool name: " %>
 		<%= f.text_field :name %> <br>
 		<%= f.label :description, "Description (optional): " %>	
 		<%= f.text_field :description %>
-		<%= f.submit "Add to my Toolbox" %>
+		<%= f.submit "Create Tool", data: { disable_with: false }%>
 	<% end %>
 
 	<br>
@@ -66,34 +64,4 @@
 		<%= f.submit "Loan it out!" %>
 	<% end %>
 
-	<script type="text/javascript" charset="utf-8">
-		$(function(){
-			$("#show-toolbox").on("click", function() {
 
-				var id = $(this).data("user-id");
-				
-				$.get("/users/" + id + "/tools" + ".json", function(json) {
-					
-					let i = 1
-
-					json.forEach(function(tool) {
-					
-						$("#toolbox").append(
-							`<div id="tool-${tool.id}">
-							<p>${i}. ` + 
-							tool.name + 
-							`  (${tool.description})  ` +
-							`<button id="show-tool-${tool.id}" data-user-id="${id}" data-tool-id="${tool.id}" onclick="showTool(${id}, ${tool.id})">' Show Tool '</button>
-							<button style="display: none" id="hide-tool-${tool.id}" onclick="hideTool(${tool.id})"> ' Hide Tool '</button></p>
-							<p id="tool-${tool.id}-status"></p>
-							</div>`);
-					
-						i++;
-					})
-
-					$("#show-toolbox").toggle();
-					$("#hide-toolbox").toggle();
-				})		
-			})
-		})
-	</script>

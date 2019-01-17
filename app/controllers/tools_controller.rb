@@ -26,10 +26,14 @@ class ToolsController < ApplicationController
 		if logged_in?
 			@tool = Tool.new(tool_params)
 			@tool.user_id = current_user.id
+			@user = current_user
 
 			if @tool.valid?
 				@tool.save
-				redirect_to user_path(current_user.id)
+				respond_to do |format|
+					format.html { redirect_to user_path(current_user.id), turbolinks: false}
+					format.json { render json: @tool }
+				end
 			end
 		else
 			# add error message
