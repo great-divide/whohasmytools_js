@@ -1,3 +1,7 @@
+$(function() {
+	console.log("tools.js loaded")
+})
+
 
 class Tool {
 	constructor(obj) {

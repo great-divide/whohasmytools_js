@@ -4,11 +4,11 @@ $(function(){
 		var id = $(this).data("user-id");
 		
 		$.get("/users/" + id + "/tools" + ".json", function(json) {
-			debugger
+			
 			let i = 1
 
 			json.forEach(function(tool) {
-				debugger
+				
 				
 				$("#toolbox").append(
 					`<div id="tool-${tool.id}">
