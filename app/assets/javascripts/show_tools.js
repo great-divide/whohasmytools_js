@@ -1,4 +1,6 @@
 $(function(){
+	console.log("show_tools loaded")
+
 	$("#show-toolbox").on("click", function() {
 		
 		var id = $(this).data("user-id");
@@ -8,7 +10,9 @@ $(function(){
 			let i = 1
 
 			json.forEach(function(tool) {
-				
+				// debugger
+				// let newTool = new Tool(tool)
+				// add below into format function
 				
 				$("#toolbox").append(
 					`<div id="tool-${tool.id}">
@@ -35,6 +39,7 @@ $(function(){
 function showTool(userId, toolId) {
 	
 	$.get("/users/" + userId + "/tools/" + toolId + ".json", function(json) {	
+		// make new instance of Tool, use custom function for all this HTML
 		
 		if (json.contracts.length > 0) {
 
@@ -42,8 +47,12 @@ function showTool(userId, toolId) {
 
 			$(`#tool-${toolId}-status`).append(
 				`You loaned it to <b> ${json.contracts[json.contracts.length-1].borrower.username} </b> on 
-				${date}`
+				${date}
+				<button class="new_contract" data-tool_id="${toolId}">Loan it out!</button>`
 			);
+
+			// $(".new_contract").addEventListener()
+
 		} else {
 			$(`#tool-${toolId}-status`).append(
 			`This tool has not been loaned.`

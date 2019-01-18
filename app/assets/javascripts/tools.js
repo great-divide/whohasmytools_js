@@ -25,3 +25,6 @@ Tool.prototype.listTool = function () {
 		</div>`
 }
 
+// Tool.new_contract FORM
+
+// Tool.new_contract function?? 

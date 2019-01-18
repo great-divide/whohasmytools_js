@@ -3,7 +3,7 @@
 		<%= form_for [@tool, @contract] do |f| %>
 			<%= f.label :borrower, "Borrower" %>
 			<%= f.collection_select :borrower, User.all, :username, :username, {include_blank: true} %>
-			<%= f.submit "Loan it out!" %>
+			<%= f.submit "Loan it out!", id: "create_tool_contract" %>
 		<% end %>
 <% else %>
 	<h3>You already loaned it out!</h3>

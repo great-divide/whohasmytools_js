@@ -41,6 +41,7 @@
 	
 	</div>
 
+
 <h3>Add some tools to your toolbox so you can loan them out!</h3>
 	<%= form_for @tool, :html => {:id => "create_tool", :data => {user_id: @user.id, turbolinks: false} } do |f|  %>
 		<%= f.label :name, "Tool name: " %>
@@ -54,6 +55,9 @@
 	<br>
 
 <!-- Loan or Borrow things, float side by side -->
+
+<!-- MAKE THIS FORM WITH JAVASCRIPT! -->
+<!-- call new contract partial with JS?? -->
 <h3>Loan a Tool to Someone!</h3>
 	<%= form_for @contract do |f| %>
 		<%= f.label :borrower, "Borrower" %>
@@ -61,7 +65,7 @@
 		<%= f.label :tool, "Tool: " %>
 	<!-- 	<%= f.collection_select :tool, @user.available_tools, :name, :name, {include_blank: true} %> -->
 		<%= f.select :tool_id, options_for_select(@user.available_tools.collect { | tool | [tool.name, tool.id] }, @tool.id), {include_blank: true}, {} %>
-		<%= f.submit "Loan it out!" %>
+		<%= f.submit "Loan it out!", id: "create_tool_contract" %>
 	<% end %>
-
+<!-- pass ToolId ... POST request for new contract -->
 

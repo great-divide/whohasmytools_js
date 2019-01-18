@@ -11,14 +11,17 @@ class ContractsController < ApplicationController
 	end
 
 	def new
+		@user = current_user
 		@tool = Tool.find(params[:tool_id])
 		if @tool.active == false
 			@contract = Contract.new
+			# render partial?
 		else
 			@contract = @tool.contracts.active.first
 		end
-		@user = current_user
+		
 	end
+
 
 
 	def create

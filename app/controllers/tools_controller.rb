@@ -90,6 +90,9 @@ class ToolsController < ApplicationController
 	  end
   end
 
+  def new_tool
+  	# renders new_tool form/partial 
+  end
 
 private
 	def tool_params
