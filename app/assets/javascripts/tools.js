@@ -4,6 +4,7 @@ class Tool {
 		this.id   =  obj.id;
 		this.description = obj.description;
 		this.user_id = obj.user_id;
+		this.contracts = obj.contracts;
 		this.active = obj.active
 	}
 }
@@ -35,16 +36,16 @@ $(function(){
 			let i = 1
 
 			json.forEach(function(tool) {
-				debugger
+				// debugger
 				let newTool = new Tool(tool)
-				// add below into format function
+				// add below into format function?
 				
 				$("#toolbox").append(
 					`<div id="tool-${newTool.id}">
 					<p>${i}. ` + 
 					newTool.name + 
 					`  (${newTool.description})  ` +
-					`<button id="show-tool-${newTool.id}-contracts" data-user-id="${id}" data-tool-id="${newTool.id}" onclick="showToolContracts(${id}, ${tool.id})">' Show Loans '</button>
+					`<button id="show-tool-${newTool.id}-contracts" data-user-id="${newTool.user_id}" data-tool-id="${newTool.id}" onclick="showToolContracts(${newTool.user_id}, ${newTool.id})">' Show Loans '</button>
 					<button style="display: none" id="hide-tool-${newTool.id}-contracts" onclick="hideToolContracts(${newTool.id})"> ' Hide Loans '</button></p>
 					<p id="tool-${newTool.id}-contracts-list"></p>
 					</div>`);
@@ -70,12 +71,7 @@ $(function(){
 });	
 
 
-function hideTool(toolId) {
-	
-	$(`#tool-${toolId}-status`).text("");
-	$(`#show-tool-${toolId}`).toggle();
-	$(`#hide-tool-${toolId}`).toggle();
-}
+
 
 $(function() {
 	$("#create_tool").submit(function(event) {

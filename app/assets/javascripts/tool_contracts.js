@@ -1,16 +1,14 @@
 function showToolContracts(userId, toolId) {
 	
 	$.get("/users/" + userId + "/tools/" + toolId + ".json", function(json) {	
-		// make new instance of Tool, use custom function for all this HTML
 		
-		if (json.contracts.length > 0) {
-
-			formatToolContracts(json, toolId);
-
-		} else {
+		let newTool = new Tool(json)
 			
-			$(`#tool-${toolId}-contracts-list`).append(
-			`This tool has never before been loaned! <button class="new_contract" data-tool_id="${toolId}">' Loan it out! '</button>`
+		if (newTool.contracts.length > 0) {
+			formatToolContracts(newTool);
+		} else {			
+			$(`#tool-${newTool.id}-contracts-list`).append(
+			`This tool has never before been loaned! <button class="new_contract" data-tool_id="${newTool.id}">' Loan it out! '</button>`
 			);
 		};
 	});
