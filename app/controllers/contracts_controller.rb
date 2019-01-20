@@ -15,7 +15,11 @@ class ContractsController < ApplicationController
 		@tool = Tool.find(params[:tool_id])
 		if @tool.active == false
 			@contract = Contract.new
-			# render partial?
+			
+			respond_to do |format|
+				format.html
+				format.js { render partial: 'new_contract_form'}
+			end
 		else
 			@contract = @tool.contracts.active.first
 		end
