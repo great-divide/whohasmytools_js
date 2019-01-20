@@ -14,12 +14,8 @@ function showToolContracts(userId, toolId) {
 			);
 		};
 	});
-
 	$(`#show-tool-${toolId}-contracts`).toggle();
 	$(`#hide-tool-${toolId}-contracts`).toggle();
-	// $(`#hide-tool-${toolId}-contracts`).on("click", function() {
-	// 	hideToolContracts(toolId);
-	// });
 };
 
 function hideToolContracts(toolId) {
@@ -35,11 +31,11 @@ function formatToolContracts(tool) {
 
 	if (tool.active === false) {
 		$(`#tool-${tool.id}-contracts-list`).prepend(
-			`<li>Tool is ready to be loaned! <button class="new_contract" data-tool_id="${tool.id}">' Loan it out! '</button></li>`
+			`<li>Tool is ready to be loaned! <button class="new_contract" data-tool_id="${tool.id}" onclick="newToolContract(${tool.id}">' Loan it out! '</button></li>`
 		);
 	} else if (tool.active === true) {
 		$(`#tool-${tool.id}-contracts-list`).prepend(
-			`<li><button class="new_contract" data-tool_id="${tool.id}">Mark it as Returned!</button></li>`
+			`<li><button class="new_contract" data-tool_id="${tool.id}" onclick="closeContract()">Mark it as Returned!</button></li>`
 		);
 	}
 
@@ -48,21 +44,27 @@ function formatToolContracts(tool) {
 		${date}</li>`
 	);
 
-	tool.contracts.pop();
-	tool.contracts.forEach(function(contract) {
+	if (tool.contracts.length > 1) {
+		tool.contracts.pop();
+		tool.contracts.forEach(function(contract) {
 
-		var newDate = new Date(contract.borrower.created_at);
+			var newDate = new Date(contract.borrower.created_at);
 
-		$(`#tool-${tool.id}-contracts-list`).append(
-			`<li>You loaned it to <b> ${contract.borrower.username} </b> on 
-			${date}</li>`
-		);
-	});
+			$(`#tool-${tool.id}-contracts-list`).append(
+				`<li>You loaned it to <b> ${contract.borrower.username} </b> on 
+				${date}</li>`
+			);
+		});
+	}
 
-	$(".new_contract").on("click", function() {
+	// $(".new_contract").on("click", function() {
 		
-		newToolContract(tool.id)
-	})	
+	// 	newToolContract(tool.id)
+	// })	
+}
+
+function closeContract() {
+	console.log("close contract")
 }
 
 function newToolContract(toolId) {
