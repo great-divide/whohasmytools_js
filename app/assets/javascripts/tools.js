@@ -1,8 +1,3 @@
-$(function() {
-	console.log("tools.js loaded")
-})
-
-
 class Tool {
 	constructor(obj) {
 		this.name = obj.name;
@@ -29,3 +24,98 @@ class Tool {
 // Tool.new_contract FORM
 
 // Tool.new_contract function?? 
+
+$(function(){
+
+	$("#show-toolbox").on("click", function() {
+		
+		var id = $(this).data("user-id");
+		
+		$.get("/users/" + id + "/tools" + ".json", function(json) {
+			
+			let i = 1
+
+			json.forEach(function(tool) {
+				// debugger
+				// let newTool = new Tool(tool)
+				// add below into format function
+				
+				$("#toolbox").append(
+					`<div id="tool-${tool.id}">
+					<p>${i}. ` + 
+					tool.name + 
+					`  (${tool.description})  ` +
+					`<button id="show-tool-${tool.id}-contracts" data-user-id="${id}" data-tool-id="${tool.id}" onclick="showToolContracts(${id}, ${tool.id})">' Show Loans '</button>
+					<button style="display: none" id="hide-tool-${tool.id}-contracts" onclick="hideToolContracts(${tool.id})"> ' Hide Loans '</button></p>
+					<p id="tool-${tool.id}-contracts-list"></p>
+					</div>`);
+			
+				i++;
+			})
+
+			$("#show-toolbox").toggle();
+			$("#hide-toolbox").toggle();
+		})		
+	})
+
+})
+
+
+
+$(function(){
+	$("#hide-toolbox").on("click", function() {
+		$("#toolbox").text("")
+		$("#show-toolbox").toggle();
+		$("#hide-toolbox").toggle();
+	});
+});	
+
+
+function hideTool(toolId) {
+	
+	$(`#tool-${toolId}-status`).text("");
+	$(`#show-tool-${toolId}`).toggle();
+	$(`#hide-tool-${toolId}`).toggle();
+}
+
+$(function() {
+	$("#create_tool").submit(function(event) {
+		
+		event.preventDefault();
+
+		let url = `${this.action}`+ '.json';
+
+		let data = {
+			'authenticity_token': $("input[name='authenticity_token']").val(),
+			'tool':{
+				'name': $("#tool_name").val(),
+				'description': $("#tool_description").val()
+			}
+		}
+
+		$.post(url, $("#create_tool").serialize() )
+		.done(function(tool) {
+			$("#create_tool").trigger( "reset" ).attr('selected',false);
+
+			var i = $("#toolbox").children().length + 1
+			var id = tool.user_id
+
+			$("#toolbox").append(
+				`<div id="tool-${tool.id}">
+				<p>${i}. ` + 
+				tool.name + 
+				`  (${tool.description})  ` +
+				`<button id="show-tool-${tool.id}" data-user-id="${id}" data-tool-id="${tool.id}" onclick="showTool(${id}, ${tool.id})">' Show Tool '</button>
+				<button style="display: none" id="hide-tool-${tool.id}" onclick="hideTool(${tool.id})"> ' Hide Tool '</button></p>
+				<p id="tool-${tool.id}-status"></p>
+				</div>`);
+			
+		})
+	})
+})
+
+
+
+
+
+	

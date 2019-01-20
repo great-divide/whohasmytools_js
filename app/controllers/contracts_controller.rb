@@ -55,6 +55,10 @@ class ContractsController < ApplicationController
 		end
 	end
 
+	def terminate
+		binding.pry
+	end
+
 	def update
 		if logged_in?
 			@contract = Contract.find_by(id: params[:id])

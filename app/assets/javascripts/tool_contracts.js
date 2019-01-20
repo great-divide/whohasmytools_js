@@ -56,15 +56,15 @@ function formatToolContracts(tool) {
 			);
 		});
 	}
-
-	// $(".new_contract").on("click", function() {
-		
-	// 	newToolContract(tool.id)
-	// })	
-}
+};
 
 function closeContract() {
 	console.log("close contract")
+	$.ajax({
+		url: 'tools/id/contracts/id/terminate',
+		method: "PATCH",
+		data: {name: "john"}
+	})
 }
 
 function newToolContract(toolId) {
