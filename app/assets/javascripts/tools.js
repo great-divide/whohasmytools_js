@@ -1,13 +1,12 @@
 class Tool {
 	constructor(obj) {
 		this.name = obj.name;
+		this.id   =  obj.id;
 		this.description = obj.description;
 		this.user_id = obj.user_id;
 		this.active = obj.active
 	}
 }
-
-
 
 // Tool.prototype.listTool = function () {
 // 	return `
@@ -36,18 +35,18 @@ $(function(){
 			let i = 1
 
 			json.forEach(function(tool) {
-				// debugger
-				// let newTool = new Tool(tool)
+				debugger
+				let newTool = new Tool(tool)
 				// add below into format function
 				
 				$("#toolbox").append(
-					`<div id="tool-${tool.id}">
+					`<div id="tool-${newTool.id}">
 					<p>${i}. ` + 
-					tool.name + 
-					`  (${tool.description})  ` +
-					`<button id="show-tool-${tool.id}-contracts" data-user-id="${id}" data-tool-id="${tool.id}" onclick="showToolContracts(${id}, ${tool.id})">' Show Loans '</button>
-					<button style="display: none" id="hide-tool-${tool.id}-contracts" onclick="hideToolContracts(${tool.id})"> ' Hide Loans '</button></p>
-					<p id="tool-${tool.id}-contracts-list"></p>
+					newTool.name + 
+					`  (${newTool.description})  ` +
+					`<button id="show-tool-${newTool.id}-contracts" data-user-id="${id}" data-tool-id="${newTool.id}" onclick="showToolContracts(${id}, ${tool.id})">' Show Loans '</button>
+					<button style="display: none" id="hide-tool-${newTool.id}-contracts" onclick="hideToolContracts(${newTool.id})"> ' Hide Loans '</button></p>
+					<p id="tool-${newTool.id}-contracts-list"></p>
 					</div>`);
 			
 				i++;
@@ -118,4 +117,3 @@ $(function() {
 
 
 
-	
