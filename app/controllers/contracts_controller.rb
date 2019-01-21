@@ -30,7 +30,7 @@ class ContractsController < ApplicationController
 
 	def create
 		if logged_in? && User.find_by(username: params["contract"]["borrower"])
-
+			binding.pry
 			# add error message if and logic if tool not selected (first add blank option to tool select)
 	
 			@contract = Contract.create
@@ -58,10 +58,11 @@ class ContractsController < ApplicationController
 
 	def update
 		if logged_in?
-			binding.pry
+			# binding.pry
 			@contract = Contract.find_by(id: params[:id])
 			if params[:return]
 				@contract.terminate
+				@contract.save
 				# add message "@tool.name returned"
 			elsif params[:extend]
 				# change due date, which doesn't exist yet

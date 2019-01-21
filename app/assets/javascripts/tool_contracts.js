@@ -1,7 +1,6 @@
 function showToolContracts(userId, toolId) {
 	
 	$.get("/users/" + userId + "/tools/" + toolId + ".json", function(json) {	
-		
 		let newTool = new Tool(json)
 			
 		if (newTool.contracts.length > 0) {
@@ -33,7 +32,7 @@ function formatToolContracts(tool) {
 		);
 	} else if (tool.active === true) {
 		$(`#tool-${tool.id}-contracts-list`).prepend(
-			`<li><button class="new_contract" data-tool_id="${tool.id}">Mark it as Returned!</button></li>`
+			`<li><button id="close_contract" data-tool_id="${tool.id}">Mark it as Returned!</button></li>`
 		).on("click", closeContract(tool));
 	}
 
@@ -61,8 +60,10 @@ function closeContract(tool) {
 		url: `${tool.user_id}/contracts/${tool.contracts.length-1}/update.json`,
 		datatype: 'JSON',
 		method: "PATCH",
-		data: {return: "true"}
+		data: {return: "true", id: "${tool.contracts[contracts.length-1].id}"}
 	})
+
+	// formatToolContracts(tool)
 }
 
 

@@ -36,7 +36,7 @@ $(function(){
 			let i = 1
 
 			json.forEach(function(tool) {
-				// debugger
+				
 				let newTool = new Tool(tool)
 				// add below into format function?
 				
