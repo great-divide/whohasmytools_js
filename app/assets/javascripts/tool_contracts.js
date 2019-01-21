@@ -33,8 +33,8 @@ function formatToolContracts(tool) {
 		);
 	} else if (tool.active === true) {
 		$(`#tool-${tool.id}-contracts-list`).prepend(
-			`<li><button class="new_contract" data-tool_id="${tool.id}" onclick="closeContract()">Mark it as Returned!</button></li>`
-		);
+			`<li><button class="new_contract" data-tool_id="${tool.id}">Mark it as Returned!</button></li>`
+		).on("click", closeContract(tool));
 	}
 
 	$(`#tool-${tool.id}-contracts-list`).append(
@@ -56,14 +56,16 @@ function formatToolContracts(tool) {
 	}
 };
 
-function closeContract() {
-	console.log("close contract")
+function closeContract(tool) {
 	$.ajax({
-		url: 'tools/id/contracts/id/terminate',
+		url: `${tool.user_id}/contracts/${tool.contracts.length-1}/update.json`,
+		datatype: 'JSON',
 		method: "PATCH",
-		data: {name: "john"}
+		data: {return: "true"}
 	})
 }
+
+
 
 function newToolContract(toolId) {
 

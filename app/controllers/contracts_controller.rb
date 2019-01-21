@@ -55,12 +55,10 @@ class ContractsController < ApplicationController
 		end
 	end
 
-	def terminate
-		binding.pry
-	end
 
 	def update
 		if logged_in?
+			binding.pry
 			@contract = Contract.find_by(id: params[:id])
 			if params[:return]
 				@contract.terminate
@@ -68,7 +66,10 @@ class ContractsController < ApplicationController
 			elsif params[:extend]
 				# change due date, which doesn't exist yet
 			end
-			redirect_to user_contracts_path(current_user)
+			respond_to do |format|
+			format.html {redirect_to user_contracts_path(current_user)}
+			format.json { render json: @contract }
+		end
 		end
 	end
 
