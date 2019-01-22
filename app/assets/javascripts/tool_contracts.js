@@ -1,3 +1,15 @@
+class toolContract {
+	constructor(obj) {
+		this.id = obj.id;
+		this.tool = obj.tool;
+		this.loaner = obj.loaner;
+		this.borrower = obj.borrower;
+		this.active = obj.active;
+		this.created_at = obj.created_at;
+		this.updated_at = obj.updated_at;
+	}
+}
+
 function showToolContracts(userId, toolId) {
 	
 	$.get("/users/" + userId + "/tools/" + toolId + ".json", function(json) {	
@@ -23,47 +35,62 @@ function hideToolContracts(toolId) {
 }
 
 function formatToolContracts(tool) {
+	debugger
+	tool.contracts.forEach(function(contract) {
+		let newContract = new toolContract(contract)
+ 	
+		let loanDate = new Date(newContract.created_at);
 
-	var date = new Date(tool.contracts[tool.contracts.length-1].borrower.created_at)
+		if (newContract.active === true) {
+			$(`#tool-${tool.id}-contracts-list`).prepend(
+				`<li>You loaned it to <b> ${newContract.borrower.username} </b> on 
+				${loanDate}</li><br>`
+			);
+		} else if (newContract.active === false) {
+			let returnDate = new Date(newContract.updated_at)
+			$(`#tool-${tool.id}-contracts-list`).prepend(
+				`<li>You loaned it to <b> ${newContract.borrower.username} </b> on 
+				${loanDate}</li>
+				<li> <b>${newContract.borrower.username} returned it </b>on ${returnDate}.
+				</li><br>`
+			)
+		}	
+	})
+
+
+	$(`#tool-${tool.id}-contracts-list`).prepend(
+			`<button id="new_contract" data-tool_id="${tool.id}" onclick="newToolContract(${tool.id}" style="display: none">' Loan it out! '</button>
+			<button id="close_contract" data-tool-id="${tool.id}" style="display: none">Mark it as Returned!</button>`)
+	
 
 	if (tool.active === false) {
-		$(`#tool-${tool.id}-contracts-list`).prepend(
-			`<li>Tool is ready to be loaned! <button class="new_contract" data-tool_id="${tool.id}" onclick="newToolContract(${tool.id}">' Loan it out! '</button></li>`
-		);
+		$(`#new_contract`).toggle();
 	} else if (tool.active === true) {
-		$(`#tool-${tool.id}-contracts-list`).prepend(
-			`<li><button id="close_contract" data-tool_id="${tool.id}">Mark it as Returned!</button></li>`
-		).on("click", closeContract(tool));
-	}
+		let activeContract = tool.contracts[tool.contracts.length-1]
 
-	$(`#tool-${tool.id}-contracts-list`).append(
-		`<br><li>You loaned it to <b> ${tool.contracts[tool.contracts.length-1].borrower.username} </b> on 
-		${date}</li>`
-	);
-
-	if (tool.contracts.length > 1) {
-		tool.contracts.pop();
-		tool.contracts.forEach(function(contract) {
-
-			var newDate = new Date(contract.borrower.created_at);
-
-			$(`#tool-${tool.id}-contracts-list`).append(
-				`<li>You loaned it to <b> ${contract.borrower.username} </b> on 
-				${date}</li>`
-			);
+		$(`#close_contract`).toggle().click(function() {	
+			[activeContract], closeContract(activeContract);
 		});
 	}
 };
 
-function closeContract(tool) {
+function closeContract(contract) {
+	
 	$.ajax({
-		url: `${tool.user_id}/contracts/${tool.contracts.length-1}/update.json`,
-		datatype: 'JSON',
+		url: `${contract.loaner.id}/contracts/${contract.id}/update.json`,
 		method: "PATCH",
-		data: {return: "true", id: "${tool.contracts[contracts.length-1].id}"}
-	})
+		data: {return: "true", id: "${contract.id}"},
+	}).done(function() {
+		$(`#new_contract`).toggle();
+		$(`#close_contract`).toggle();
 
-	// formatToolContracts(tool)
+		let returnDate = new Date(contract.updated_at);
+		// debugger
+		$(`#tool-${contract.tool.id}-contracts-list li:first`).append(`
+			<li> <b>${contract.borrower.username} returned it </b>on ${returnDate}.
+			</li>`
+		)
+	})	
 }
 
 
