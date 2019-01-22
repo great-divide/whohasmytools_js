@@ -1,0 +1,7 @@
+	<%= form_for @tool, :html => {:id => "create_tool", :data => {user_id: @user.id, turbolinks: false} } do |f|  %>
+		<%= f.label :name, "Tool name: " %>
+		<%= f.text_field :name %> <br>
+		<%= f.label :description, "Description (optional): " %>	
+		<%= f.text_field :description %>
+		<%= f.submit "Create Tool", data: { disable_with: false }%>
+	<% end %>

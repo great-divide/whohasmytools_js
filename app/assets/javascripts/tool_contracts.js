@@ -75,7 +75,8 @@ function formatToolContracts(tool) {
 	);
 
 	$(`#new_contract`).click(function() {
-				[tool], newToolContract(tool)
+		// debugger
+				tool.newToolContract();
 			})
 	
 
@@ -126,10 +127,15 @@ function closeContract(contract) {
 // 		</div>`
 // }
 
-// Tool
+// ToolContract.prototype.newToolContract = function () {
+// 	debugger
+// 		$.get(`/tools/${this.id}/contracts/new`, function(response) {
+// 			$(`#tool-${this.id}-contracts-list`).empty().prepend(response)
+// 	});
+// }
 
-function newToolContract(tool) {
-	$.get(`/tools/${tool.id}/contracts/new`, function(response) {
-			$(`#tool-${tool.id}-contracts-list`).empty().prepend(response)
-	});
-}
+// function newToolContract(tool) {
+// 	$.get(`/tools/${tool.id}/contracts/new`, function(response) {
+// 			$(`#tool-${tool.id}-contracts-list`).empty().prepend(response)
+// 	});
+// }
