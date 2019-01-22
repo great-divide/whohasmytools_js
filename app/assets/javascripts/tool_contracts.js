@@ -1,4 +1,4 @@
-class toolContract {
+class ToolContract {
 	constructor(obj) {
 		this.id = obj.id;
 		this.tool = obj.tool;
@@ -48,7 +48,7 @@ function hideToolContracts(toolId) {
 function formatToolContracts(tool) {
 	
 	tool.contracts.forEach(function(contract) {
-		let newContract = new toolContract(contract)
+		let newContract = new ToolContract(contract)
  	
 		let loanDate = new Date(newContract.created_at);
 
@@ -106,16 +106,30 @@ function closeContract(contract) {
 			<li> <b>${contract.borrower.username} returned it </b>on ${returnDate}.
 			</li>`
 		)
+		$(`#contract_${contract.id}`).remove();
+		
+		if (!$.trim($('#active_loans').html())) {
+			$('#active_loans').append("<li>You are not loaning any tools right now.</li>")
+		}
 	})	
 }
 
+// Tool.prototype.listTool = function () {
+// 	return `
+// 		<div id="tool-${this.id}">
+// 		<p>${i}. ` + 
+// 		this.name + 
+// 		`  (${this.description})  ` +
+// 		`<button id="show-tool-${this.id}" data-user-id="${this.user_id}" data-tool-id="${this.id}" onclick="showTool(${this.user_id}, ${this.id})">' Show Tool '</button>
+// 		<button style="display: none" id="hide-tool-${this.id}" onclick="hideTool(${this.id})"> ' Hide Tool '</button></p>
+// 		<p id="tool-${this.id}-status"></p>
+// 		</div>`
+// }
 
-// will now receive TOOL instead of toolId
+// Tool
+
 function newToolContract(tool) {
-	// debugger
 	$.get(`/tools/${tool.id}/contracts/new`, function(response) {
-		// debugger	
 			$(`#tool-${tool.id}-contracts-list`).empty().prepend(response)
 	});
-	// debugger
 }

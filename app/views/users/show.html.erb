@@ -5,15 +5,17 @@
 <!-- CONTRACTS SECTION -->
 <h2><%= link_to "My Contracts", user_contracts_path(@user)%></h2>
 
-<h3>Active Loans</h3>
+<h3 id="active_loans_title">Active Loans</h3>
 	
 	<% if @user.active_loans.empty? %>
-			<p>You are not loaning any tools right now.</p>
+		<ol id="active_loans">
+			<li id="active_loans_empty">You are not loaning any tools right now.</li>
+		</ol>
 		<% else %>
 			<% @user.active_loans.each do |c| %>
 				<!-- add DUE DATE -->
-				<ol>
-					<li><%= "You loaned your #{c.tool.name} to #{c.borrower.username} on #{c.created_at.strftime("%A, %B %d")}." %></li>
+				<ol id="active_loans">
+					<li id="contract_<%= c.id %>"><%= "You loaned your #{c.tool.name} to #{c.borrower.username} on #{c.created_at.strftime("%A, %B %d")}." %></li>
 				</ol>
 		<% end %>
 	<% end %>
