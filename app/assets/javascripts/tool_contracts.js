@@ -20,22 +20,21 @@ function showToolContracts(userId, toolId) {
 		} else {			
 			$(`#tool-${newTool.id}-contracts-list`).append(
 			`This tool has never before been loaned! <button class="new_contract" data-tool_id="${newTool.id}">' Loan it out! '</button>`
-			);
-		};
-	});
+			)
+		}
+	})
 	$(`#show-tool-${toolId}-contracts`).toggle();
 	$(`#hide-tool-${toolId}-contracts`).toggle();
-};
+}
 
 function hideToolContracts(toolId) {
 	$(`#tool-${toolId}-contracts-list`)[0].innerHTML = "";
 	$(`#show-tool-${toolId}-contracts`).toggle();
 	$(`#hide-tool-${toolId}-contracts`).toggle();
-
 }
 
 function formatToolContracts(tool) {
-	debugger
+	
 	tool.contracts.forEach(function(contract) {
 		let newContract = new toolContract(contract)
  	
@@ -59,8 +58,9 @@ function formatToolContracts(tool) {
 
 
 	$(`#tool-${tool.id}-contracts-list`).prepend(
-			`<button id="new_contract" data-tool_id="${tool.id}" onclick="newToolContract(${tool.id}" style="display: none">' Loan it out! '</button>
-			<button id="close_contract" data-tool-id="${tool.id}" style="display: none">Mark it as Returned!</button>`)
+		`<button id="new_contract" data-tool_id="${tool.id}" onclick="newToolContract(${tool.id}" style="display: none">' Loan it out! '</button>
+		<button id="close_contract" data-tool-id="${tool.id}" style="display: none">Mark it as Returned!</button>`
+	)
 	
 
 	if (tool.active === false) {
@@ -85,7 +85,7 @@ function closeContract(contract) {
 		$(`#close_contract`).toggle();
 
 		let returnDate = new Date(contract.updated_at);
-		// debugger
+
 		$(`#tool-${contract.tool.id}-contracts-list li:first`).append(`
 			<li> <b>${contract.borrower.username} returned it </b>on ${returnDate}.
 			</li>`

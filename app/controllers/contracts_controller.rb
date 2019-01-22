@@ -58,9 +58,9 @@ class ContractsController < ApplicationController
 
 	def update
 		if logged_in?
-			# binding.pry
+	
 			@contract = Contract.find_by(id: params[:id])
-			# binding.pry
+
 			if params[:return]
 				@contract.terminate
 				@contract.save
