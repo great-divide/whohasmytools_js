@@ -3,7 +3,7 @@
 		<%= f.label :borrower, "Borrower" %>
 		<%= f.collection_select :borrower, User.all, :username, :username, {include_blank: true} %> <br> <br>
 		<%= f.label :tool, "Tool: " %>
-	<!-- 	<%= f.collection_select :tool, @user.available_tools, :name, :name, {include_blank: true} %> -->
+
 		<%= f.select :tool_id, options_for_select(@user.available_tools.collect { | tool | [tool.name, tool.id] }, @tool.id), {include_blank: true}, {} %>
 		<%= f.submit "Loan it out!", id: "create_contract" %>
 	<% end %>

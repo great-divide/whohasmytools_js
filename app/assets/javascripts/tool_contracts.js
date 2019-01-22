@@ -75,7 +75,7 @@ function formatToolContracts(tool) {
 	);
 
 	$(`#new_contract`).click(function() {
-				[newTool], newToolContract(newTool)
+				[tool], newToolContract(tool)
 			})
 	
 
@@ -112,9 +112,10 @@ function closeContract(contract) {
 
 // will now receive TOOL instead of toolId
 function newToolContract(tool) {
-
-	$.get(`/tools/`+ toolId + `/contracts/new`, function(response) {
-
-			$(`#tool-${toolId}-contracts-list`).prepend(response)
-		});
+	// debugger
+	$.get(`/tools/${tool.id}/contracts/new`, function(response) {
+		// debugger	
+			$(`#tool-${tool.id}-contracts-list`).empty().prepend(response)
+	});
+	// debugger
 }

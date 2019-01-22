@@ -17,13 +17,12 @@ class ContractsController < ApplicationController
 			@contract = Contract.new
 			
 			respond_to do |format|
-				format.html
-				format.js { render partial: 'new_contract_form'}
+				format.html { render partial: 'new_contract_form' }
+				format.json { render partial: 'new_contract_form'}
 			end
 		else
 			@contract = @tool.contracts.active.first
 		end
-		
 	end
 
 
