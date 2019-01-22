@@ -13,14 +13,26 @@ class toolContract {
 function showToolContracts(userId, toolId) {
 	
 	$.get("/users/" + userId + "/tools/" + toolId + ".json", function(json) {	
+
 		let newTool = new Tool(json)
 			
 		if (newTool.contracts.length > 0) {
+			$(`#tool-${newTool.id}-contracts-list`).prepend(
+				`<button id="new_contract" data-tool_id="${newTool.id}" style="display: none">' Loan it out! '</button>
+				<button id="close_contract" data-tool-id="${newTool.id}" style="display: none">Mark it as Returned!</button>`
+			);
+
+		$(`#new_contract`).click(function() {
+				[newTool], newToolContract(newTool)
+			});
+
 			formatToolContracts(newTool);
+
 		} else {			
 			$(`#tool-${newTool.id}-contracts-list`).append(
-			`This tool has never before been loaned! <button class="new_contract" data-tool_id="${newTool.id}">' Loan it out! '</button>`
-			)
+				`This tool has never before been loaned!`
+			);
+			$(`#new_contract`).toggle();
 		}
 	})
 	$(`#show-tool-${toolId}-contracts`).toggle();
@@ -58,9 +70,13 @@ function formatToolContracts(tool) {
 
 
 	$(`#tool-${tool.id}-contracts-list`).prepend(
-		`<button id="new_contract" data-tool_id="${tool.id}" onclick="newToolContract(${tool.id}" style="display: none">' Loan it out! '</button>
+		`<button id="new_contract" data-tool_id="${tool.id}" style="display: none">' Loan it out! '</button>
 		<button id="close_contract" data-tool-id="${tool.id}" style="display: none">Mark it as Returned!</button>`
-	)
+	);
+
+	$(`#new_contract`).click(function() {
+				[newTool], newToolContract(newTool)
+			})
 	
 
 	if (tool.active === false) {
@@ -94,8 +110,8 @@ function closeContract(contract) {
 }
 
 
-
-function newToolContract(toolId) {
+// will now receive TOOL instead of toolId
+function newToolContract(tool) {
 
 	$.get(`/tools/`+ toolId + `/contracts/new`, function(response) {
 
