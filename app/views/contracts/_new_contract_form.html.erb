@@ -1,9 +1,9 @@
 <h3>Loan a Tool to Someone!</h3>
-	<%= form_for @contract do |f| %>
+	<%= form_for @contract, :html => {:id => "create_contract", :data => {turbolinks: false} } do |f| %>
 		<%= f.label :borrower, "Borrower" %>
 		<%= f.collection_select :borrower, User.all, :username, :username, {include_blank: true} %> <br> <br>
 		<%= f.label :tool, "Tool: " %>
 
 		<%= f.select :tool_id, options_for_select(@user.available_tools.collect { | tool | [tool.name, tool.id] }, @tool.id), {include_blank: true}, {} %>
-		<%= f.submit "Loan it out!", id: "create_contract" %>
+		<%= f.submit "Loan it out!" %>
 	<% end %>

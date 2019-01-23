@@ -3,34 +3,7 @@
 
 
 <!-- CONTRACTS SECTION -->
-<h2><%= link_to "My Contracts", user_contracts_path(@user)%></h2>
-
-<h3 id="active_loans_title">Active Loans</h3>
-	
-	<% if @user.active_loans.empty? %>
-		<ol id="active_loans">
-			<li id="active_loans_empty">You are not loaning any tools right now.</li>
-		</ol>
-		<% else %>
-			<% @user.active_loans.each do |c| %>
-				<!-- add DUE DATE -->
-				<ol id="active_loans">
-					<li id="contract_<%= c.id %>"><%= "You loaned your #{c.tool.name} to #{c.borrower.username} on #{c.created_at.strftime("%A, %B %d")}." %></li>
-				</ol>
-		<% end %>
-	<% end %>
-
-<h3>Active Borrows</h3>
-	
-	<% if @user.borrower_contracts.empty? %>
-			<p>You are not borrowing any tools right now.</p>
-		<% else %>
-			<% @user.borrower_contracts.each do |c| %>
-				<ol>
-					<li><%= "You've had #{c.loaner.username}'s #{c.tool.name} since #{c.created_at.strftime("%A, %B %d")}." %></li>
-				</ol>
-			<% end %>
-		<% end %>
+<%= render "/contracts/active_contracts" %>
 
 <!-- TOOL SECTION, float side by side -->
 <h2>My Toolbox</h2> 
@@ -46,9 +19,8 @@
 
 <h3>Add some tools to your toolbox so you can loan them out!</h3>
 	<%= render "tools/new_tool_form" %>
-
-	<br>
-	<br>
+<br>
+<br>
 
 <!-- Loan or Borrow things, float side by side -->
 

@@ -9,21 +9,39 @@ class Tool {
 	}
 }
 
-// Tool.prototype.listTool = function () {
-// 	return `
-// 		<div id="tool-${this.id}">
-// 		<p>${i}. ` + 
-// 		this.name + 
-// 		`  (${this.description})  ` +
-// 		`<button id="show-tool-${this.id}" data-user-id="${this.user_id}" data-tool-id="${this.id}" onclick="showTool(${this.user_id}, ${this.id})">' Show Tool '</button>
-// 		<button style="display: none" id="hide-tool-${this.id}" onclick="hideTool(${this.id})"> ' Hide Tool '</button></p>
-// 		<p id="tool-${this.id}-status"></p>
-// 		</div>`
-// }
+Tool.prototype.newContractForm = function() {
+	let id = this.id
+	
+	$.get(`/tools/${id}/contracts/new`, function(response) {
+		$(`#tool-${id}-contracts-list`).empty().prepend(response);
 
-// Tool.new_contract FORM
+		$('#create_contract').submit(function(event) {
+			event.preventDefault();
 
-// Tool.new_contract function?? 
+			let url = `${this.action}`+ '.json';
+
+			let data = {
+				'authenticity_token': $("input[name='authenticity_token']").val(),
+				'contract':{
+					'tool': $("#tool").val(),
+					'borrower': $('#borrower').val()
+				}
+			}
+			$.post(url, $("#create_contract").serialize())
+			.done(function(contract) {
+				showToolContracts(contract.loaner.id, contract.tool.id);
+
+				if (!!$.trim($('#active_loans_empty').html())) {
+					$('#active_loans_empty').empty();
+				}
+				var date = new Date(contract.created_at)
+				$('#active_loans').append(`<li id="contract_${contract.id}">You loaned your ${contract.tool.name} to 
+					${contract.borrower.username} on ${date}.</li>`)
+			})
+		})
+	});
+}
+
 
 $(function(){
 
@@ -59,13 +77,7 @@ $(function(){
 	})
 })
 
-Tool.prototype.newToolContract = function () {
-	let id = this.id
-		$.get(`/tools/${id}/contracts/new`, function(response) {
-			debugger
-			$(`#tool-${id}-contracts-list`).empty().prepend(response)
-	});
-}
+
 
 $(function(){
 	$("#hide-toolbox").on("click", function() {
@@ -115,5 +127,17 @@ $(function() {
 
 
 
+
+// Tool.prototype.listTool = function () {
+// 	return `
+// 		<div id="tool-${this.id}">
+// 		<p>${i}. ` + 
+// 		this.name + 
+// 		`  (${this.description})  ` +
+// 		`<button id="show-tool-${this.id}" data-user-id="${this.user_id}" data-tool-id="${this.id}" onclick="showTool(${this.user_id}, ${this.id})">' Show Tool '</button>
+// 		<button style="display: none" id="hide-tool-${this.id}" onclick="hideTool(${this.id})"> ' Hide Tool '</button></p>
+// 		<p id="tool-${this.id}-status"></p>
+// 		</div>`
+// }
 
 

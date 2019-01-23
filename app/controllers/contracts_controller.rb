@@ -18,7 +18,7 @@ class ContractsController < ApplicationController
 			
 			respond_to do |format|
 				format.html { render partial: 'new_contract_form' }
-				format.json { render partial: 'new_contract_form'}
+				format.json { render partial: 'new_contract_form' }
 			end
 		else
 			@contract = @tool.contracts.active.first
@@ -42,7 +42,11 @@ class ContractsController < ApplicationController
 				end
 			@contract.save
 
-			redirect_to user_contracts_path(current_user)
+			respond_to do |format|
+				format.html { redirect_to user_contracts_path(current_user) }
+				format.json { render json: @contract }
+			end
+			# redirect_to user_contracts_path(current_user)
 		end
 	end
 

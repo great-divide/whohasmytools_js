@@ -75,8 +75,7 @@ function formatToolContracts(tool) {
 	);
 
 	$(`#new_contract`).click(function() {
-		// debugger
-				tool.newToolContract();
+				tool.newContractForm();
 			})
 	
 
@@ -110,7 +109,7 @@ function closeContract(contract) {
 		$(`#contract_${contract.id}`).remove();
 		
 		if (!$.trim($('#active_loans').html())) {
-			$('#active_loans').append("<li>You are not loaning any tools right now.</li>")
+			$('#active_loans').append(`<li id="active_loans_empty">You are not loaning any tools right now.</li>`)
 		}
 	})	
 }
