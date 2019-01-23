@@ -29,6 +29,7 @@ Tool.prototype.newContractForm = function() {
 			}
 			$.post(url, $("#create_contract").serialize())
 			.done(function(contract) {
+				
 				showToolContracts(contract.loaner.id, contract.tool.id);
 
 				if (!!$.trim($('#active_loans_empty').html())) {

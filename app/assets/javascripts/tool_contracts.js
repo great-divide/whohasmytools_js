@@ -15,7 +15,7 @@ function showToolContracts(userId, toolId) {
 	$.get("/users/" + userId + "/tools/" + toolId + ".json", function(json) {	
 
 		let newTool = new Tool(json)
-			
+
 		if (newTool.contracts.length > 0) {
 			$(`#tool-${newTool.id}-contracts-list`).prepend(
 				`<button id="new_contract" data-tool_id="${newTool.id}" style="display: none">' Loan it out! '</button>
@@ -37,16 +37,16 @@ function showToolContracts(userId, toolId) {
 	})
 	$(`#show-tool-${toolId}-contracts`).toggle();
 	$(`#hide-tool-${toolId}-contracts`).toggle();
-}
+};
 
 function hideToolContracts(toolId) {
 	$(`#tool-${toolId}-contracts-list`)[0].innerHTML = "";
 	$(`#show-tool-${toolId}-contracts`).toggle();
 	$(`#hide-tool-${toolId}-contracts`).toggle();
-}
+};
 
 function formatToolContracts(tool) {
-	
+
 	tool.contracts.forEach(function(contract) {
 		let newContract = new ToolContract(contract)
  	
@@ -72,11 +72,11 @@ function formatToolContracts(tool) {
 	$(`#tool-${tool.id}-contracts-list`).prepend(
 		`<button id="new_contract" data-tool_id="${tool.id}" style="display: none">' Loan it out! '</button>
 		<button id="close_contract" data-tool-id="${tool.id}" style="display: none">Mark it as Returned!</button>`
-	);
+	)
 
 	$(`#new_contract`).click(function() {
 				tool.newContractForm();
-			})
+	})
 	
 
 	if (tool.active === false) {
@@ -86,8 +86,10 @@ function formatToolContracts(tool) {
 
 		$(`#close_contract`).toggle().click(function() {	
 			[activeContract], closeContract(activeContract);
-		});
+		})
 	}
+
+	$(`#tool-${tool.id}-contracts-list`).prepend(`You have loaned this tool ${tool.contracts.length} times!<br><br>`)
 };
 
 function closeContract(contract) {
@@ -112,7 +114,7 @@ function closeContract(contract) {
 			$('#active_loans').append(`<li id="active_loans_empty">You are not loaning any tools right now.</li>`)
 		}
 	})	
-}
+};
 
 // Tool.prototype.listTool = function () {
 // 	return `

@@ -6,8 +6,11 @@
 
 <br>
 <br>
-<h4>Loan History</h4>
+
 	<% if !@tool.contracts.empty? %>
+		<li>You have loaned this tool <%= @tool.contracts.length %> times!
+		</li><br>
+		<h4>Loan History</h4>
 		<% @tool.contracts.each do |c| %>
 			<ol>
 				<li>Loaned to <%= c.borrower.username %> on <%= c.created_at.strftime("%a %b %d %Y") %></li>
