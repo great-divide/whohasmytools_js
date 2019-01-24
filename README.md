@@ -5,20 +5,21 @@ I was inspired to create this little tool-tracker because I borrow a lot of tool
 
 Thus, Who Has My Tools?  was born.
 
+NOTE -- this is version 3.0 of the "Who Has My Tools" legacy... the first version used Sinatra, the second used Rails, and now this snazzy third edition has added Javascript frontend functionality to the Rails skeleton from v2.
+
 ### What you should know
 The User to User relationship is defined as loaner to borrower, and created with a 
 `has_many through: loaner_contracts and borrower_contracts association`. See the `User` and `Contract` models for details.
 
 ### Getting familiar
 * Run `db:migrate` and `db:seed` to create two Users and one Tool. 
-* Check the seed file for username/pass and log in as "bob".  
-* Loan the drill to "jim"
-* Click on stuff and play around (add some tools to the toolbox, return the tool, etc.)
-* Log in as "jim" to view things from the "borrower" perspective
+* Check the seed file for username/pass and log in as username "bob", pass "123"
+* Click on stuff and play around: add some tools to the toolbox, loan them to jim, return them, etc.
+* Log in as "jim" to view things from a "borrower" perspective
 
 ### Future development
-- A future version could also put in timed reminders, and send a message to both parties at some determined interval (1 week, 2 weeks) to remind them who has their Tools, whose Tools they have.
+- A future version could put in timed reminders, and send a message to both parties at some determined interval (1 week, 2 weeks) to remind them who has their Tools, whose Tools they have.
 
-- The My Tools section of the User dashboard could be altered to display Available Tools vs Loaned Tools (right now all Tools are displayed, regardless of loan status). This would be useful as a quick overview of the state of one's tool library. 
+- "Due date" functionality should be added.. when is this tool due back? And then an option to "extend due date" if borrower wants to hang on to it for another week or something.
 
-- "Due date" functionality should be added.. when is this tool due back? And then an option to "extend due date" if borrower wants to hang on to it
+- It could be a lot... prettier :)
