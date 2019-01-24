@@ -116,27 +116,4 @@ function closeContract(contract) {
 	})	
 };
 
-// Tool.prototype.listTool = function () {
-// 	return `
-// 		<div id="tool-${this.id}">
-// 		<p>${i}. ` + 
-// 		this.name + 
-// 		`  (${this.description})  ` +
-// 		`<button id="show-tool-${this.id}" data-user-id="${this.user_id}" data-tool-id="${this.id}" onclick="showTool(${this.user_id}, ${this.id})">' Show Tool '</button>
-// 		<button style="display: none" id="hide-tool-${this.id}" onclick="hideTool(${this.id})"> ' Hide Tool '</button></p>
-// 		<p id="tool-${this.id}-status"></p>
-// 		</div>`
-// }
 
-// ToolContract.prototype.newToolContract = function () {
-// 	debugger
-// 		$.get(`/tools/${this.id}/contracts/new`, function(response) {
-// 			$(`#tool-${this.id}-contracts-list`).empty().prepend(response)
-// 	});
-// }
-
-// function newToolContract(tool) {
-// 	$.get(`/tools/${tool.id}/contracts/new`, function(response) {
-// 			$(`#tool-${tool.id}-contracts-list`).empty().prepend(response)
-// 	});
-// }

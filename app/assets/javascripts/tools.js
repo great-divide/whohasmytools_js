@@ -18,7 +18,7 @@ Tool.prototype.newContractForm = function() {
 		$('#create_contract').submit(function(event) {
 			event.preventDefault();
 
-			let url = `${this.action}`+ '.json';
+			let url = `${this.action}` + '.json';
 
 			let data = {
 				'authenticity_token': $("input[name='authenticity_token']").val(),
@@ -57,18 +57,9 @@ $(function(){
 			json.forEach(function(tool) {
 				
 				let newTool = new Tool(tool)
-				// add below into format function?
-				
-				$("#toolbox").append(
-					`<div id="tool-${newTool.id}">
-					<p>${i}. ` + 
-					newTool.name + 
-					`  (${newTool.description})  ` +
-					`<button id="show-tool-${newTool.id}-contracts" data-user-id="${newTool.user_id}" data-tool-id="${newTool.id}" onclick="showToolContracts(${newTool.user_id}, ${newTool.id})">' Show Loans '</button>
-					<button style="display: none" id="hide-tool-${newTool.id}-contracts" onclick="hideToolContracts(${newTool.id})"> ' Hide Loans '</button></p>
-					<p id="tool-${newTool.id}-contracts-list"></p>
-					</div>`);
-			
+
+				newTool.listTool(i)		
+									
 				i++;
 			})
 
@@ -129,16 +120,17 @@ $(function() {
 
 
 
-// Tool.prototype.listTool = function () {
-// 	return `
-// 		<div id="tool-${this.id}">
-// 		<p>${i}. ` + 
-// 		this.name + 
-// 		`  (${this.description})  ` +
-// 		`<button id="show-tool-${this.id}" data-user-id="${this.user_id}" data-tool-id="${this.id}" onclick="showTool(${this.user_id}, ${this.id})">' Show Tool '</button>
-// 		<button style="display: none" id="hide-tool-${this.id}" onclick="hideTool(${this.id})"> ' Hide Tool '</button></p>
-// 		<p id="tool-${this.id}-status"></p>
-// 		</div>`
-// }
+Tool.prototype.listTool = function (i) {
+	$("#toolbox").append(
+		`<div id="tool-${this.id}">
+		<p>${i}. ` + 
+		this.name + 
+		`  (${this.description})  ` +
+		`<button id="show-tool-${this.id}-contracts" data-user-id="${this.user_id}" data-tool-id="${this.id}" onclick="showToolContracts(${this.user_id}, ${this.id})">' Show Loans '</button>
+		<button style="display: none" id="hide-tool-${this.id}-contracts" onclick="hideToolContracts(${this.id})"> ' Hide Loans '</button></p>
+		<p id="tool-${this.id}-contracts-list"></p>
+		</div>`
+	)
+}
 
 
