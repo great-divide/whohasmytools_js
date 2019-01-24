@@ -9,6 +9,20 @@ class Tool {
 	}
 }
 
+Tool.prototype.listTool = function (i) {
+	$("#toolbox").append(
+		`<div id="tool-${this.id}">
+		<p>${i}. ` + 
+		this.name + 
+		`  (${this.description})  ` +
+		`<button id="show-tool-${this.id}-contracts" data-user-id="${this.user_id}" data-tool-id="${this.id}" onclick="showToolContracts(${this.user_id}, ${this.id})">' Show Loans '</button>
+		<button style="display: none" id="hide-tool-${this.id}-contracts" onclick="hideToolContracts(${this.id})"> ' Hide Loans '</button></p>
+		<p id="tool-${this.id}-contracts-list"></p>
+		</div>`
+	)
+}
+
+
 Tool.prototype.newContractForm = function() {
 	let id = this.id
 	
@@ -59,7 +73,7 @@ $(function(){
 				let newTool = new Tool(tool)
 
 				newTool.listTool(i)		
-									
+
 				i++;
 			})
 
@@ -120,17 +134,5 @@ $(function() {
 
 
 
-Tool.prototype.listTool = function (i) {
-	$("#toolbox").append(
-		`<div id="tool-${this.id}">
-		<p>${i}. ` + 
-		this.name + 
-		`  (${this.description})  ` +
-		`<button id="show-tool-${this.id}-contracts" data-user-id="${this.user_id}" data-tool-id="${this.id}" onclick="showToolContracts(${this.user_id}, ${this.id})">' Show Loans '</button>
-		<button style="display: none" id="hide-tool-${this.id}-contracts" onclick="hideToolContracts(${this.id})"> ' Hide Loans '</button></p>
-		<p id="tool-${this.id}-contracts-list"></p>
-		</div>`
-	)
-}
 
 
